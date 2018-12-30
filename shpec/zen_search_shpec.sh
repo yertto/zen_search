@@ -1,7 +1,7 @@
 #!/bin/bash shpec
 set -a
 
-. ./zen_search.sh
+. ./lib/zen_search.sh
 
 describe "zen_search"
   describe "keys_for"

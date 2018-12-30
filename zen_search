@@ -1,0 +1,4 @@
+#!/bin/bash
+. lib/zen_search.sh
+
+keys_for $1
