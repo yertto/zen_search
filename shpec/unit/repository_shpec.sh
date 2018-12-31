@@ -57,7 +57,7 @@ describe "repository"
   "role": "admin",
   "organization_name": "Multron",
   "submitter_tickets": "A Nuisance in Saint Lucia",
-  "assignee_tickets": "A Problem in Svalbard and Jan Mayen Islands"
+  "assignee_tickets": "A Problem in Malawi"
 }
 EOF
 

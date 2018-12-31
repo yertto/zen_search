@@ -45,7 +45,7 @@ Your choice: Enter _id: {
   "suspended": false,
   "role": "admin",
   "organization_name": "Qualitern",
-  "submitter_tickets": "A Nuisance in Saint Lucia",
+  "submitter_tickets": null,
   "assignee_tickets": "A Problem in Svalbard and Jan Mayen Islands"
 }
 EOF

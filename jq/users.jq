@@ -3,6 +3,6 @@
 ( [       $tickets_array[0] | .[] | { key: (.assignee_id |tostring), value: .subject }] | from_entries) as $assignee_ticket_subjects  |
 .[] | select(._id==$value) | . + {
   organization_name:        $organization_names[.organization_id|tostring],
-  submitter_tickets: $submitter_ticket_subjects["1"],
-  assignee_tickets:   $assignee_ticket_subjects["2"]
+  submitter_tickets: $submitter_ticket_subjects[._id            |tostring],
+  assignee_tickets:   $assignee_ticket_subjects[._id            |tostring]
 }
