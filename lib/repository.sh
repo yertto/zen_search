@@ -37,6 +37,8 @@ slurpfiles_for() { local resource="$resource"
   case "$resource" in
     users)
       echo "--slurpfile tickets_array $(json_file tickets) --slurpfile organizations_array $(json_file organizations)" ;;
+    tickets)
+      echo "--slurpfile   users_array $(json_file   users) --slurpfile organizations_array $(json_file organizations)" ;;
     *) ;;
   esac
 }
