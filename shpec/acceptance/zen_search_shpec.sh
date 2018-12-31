@@ -1,5 +1,3 @@
-#!/bin/bash shpec
-
 describe "zen_search"
   subject() {
     echo -e "$user_input" | ./zen_search 2>&1

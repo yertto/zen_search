@@ -1,5 +1,3 @@
-#!/bin/bash shpec
-
 . ./lib/repository.sh
 
 describe "repository"
