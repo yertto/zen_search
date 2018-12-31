@@ -6,11 +6,17 @@ echo "Welcome to Zendesk Search"
 PS3="Your choice: "
 
 select repository in users tickets organizations; do
-  select option in search list_fields; do
+  select option in show index list_fields; do
     case $option in
-      search)
+      show)
         printf "Enter _id: "; read -r _id
         show "$repository" "$_id"
+        break
+        ;;
+      index)
+        printf "Enter key: "  ; read -r key
+        printf "Enter value: "; read -r value
+        index "$repository" "$key" "$value"
         break
         ;;
       *)
