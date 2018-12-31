@@ -253,5 +253,25 @@ EOF
 
       it_returns_expected_ids
     end
+
+    describe "searching for integer values"
+      resource="tickets"
+      key="organization_id"
+      value=116
+      read -d '' expected <<EOF
+"436bf9b0-1147-4c0a-8439-6f79833bff5b"
+"d318011c-5325-4d48-9766-953fd16a44a7"
+"35072cd7-e343-4d8e-a967-bbe32eb019cb"
+"2e60886f-789f-4a00-8b43-e913facb6d78"
+"4271c15f-ade8-45b0-a31d-63cfee61adbf"
+"828c158a-91e3-42b9-8aed-ac97407a150f"
+"6a075290-6f77-4d70-87f2-e4867591772c"
+"55135930-9f1f-43df-a9fd-2105fff74578"
+"e75e6904-6536-43ea-9081-1c9f787f8682"
+EOF
+
+      it_returns_expected_ids
+    end
+  end
 end
 
