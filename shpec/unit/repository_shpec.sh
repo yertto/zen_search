@@ -75,14 +75,16 @@ describe "repository"
   "suspended": true,
   "role": "admin",
   "organization_name": "Multron",
-  "submitter_tickets": [
-    "A Nuisance in Kiribati",
-    "A Nuisance in Saint Lucia"
-  ],
-  "assignee_tickets": [
-    "A Problem in Russian Federation",
-    "A Problem in Malawi"
-  ]
+  "tickets": {
+    "submitted": {
+      "fc5a8a70-3814-4b17-a6e9-583936fca909": "A Nuisance in Kiribati",
+      "cb304286-7064-4509-813e-edc36d57623d": "A Nuisance in Saint Lucia"
+    },
+    "assigned": {
+      "1fafaa2a-a1e9-4158-aeb4-f17e64615300": "A Problem in Russian Federation",
+      "13aafde0-81db-47fd-b1a2-94b0015803df": "A Problem in Malawi"
+    }
+  }
 }
 EOF
 
