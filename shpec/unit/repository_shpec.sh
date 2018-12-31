@@ -148,18 +148,18 @@ EOF
     "Jacobs",
     "Frank"
   ],
-  "users": [
-    "Lolita Herring",
-    "Green Buckley"
-  ],
-  "tickets": [
-    "A Problem in Cyprus",
-    "A Drama in Viet Nam",
-    "A Nuisance in Poland",
-    "A Nuisance in Honduras",
-    "A Problem in Ukraine",
-    "A Nuisance in Namibia"
-  ]
+  "users": {
+    "8": "Lolita Herring",
+    "51": "Green Buckley"
+  },
+  "tickets": {
+    "25d9edca-7756-4d28-8fdd-f16f1532f6ab": "A Problem in Cyprus",
+    "ed3432e1-8cb7-40a1-be6a-6f69cbc911f1": "A Drama in Viet Nam",
+    "31e7f6d7-f6cb-4781-b4e7-2f552941e1f5": "A Nuisance in Poland",
+    "d9448e74-4a7d-45c5-9548-8b4fee714b29": "A Nuisance in Honduras",
+    "dae7a200-89b8-4a43-a17d-93c8f33a2aaa": "A Problem in Ukraine",
+    "50f3fdbd-f8a6-481d-9bf7-572972856628": "A Nuisance in Namibia"
+  }
 }
 EOF
 
