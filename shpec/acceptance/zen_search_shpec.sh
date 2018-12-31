@@ -43,7 +43,8 @@ Your choice: Enter _id: {
     "Henrietta"
   ],
   "suspended": false,
-  "role": "admin"
+  "role": "admin",
+  "organization_name": "Qualitern"
 }
 EOF
     it_matches_expected_output

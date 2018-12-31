@@ -54,7 +54,8 @@ describe "repository"
     "Diaperville"
   ],
   "suspended": true,
-  "role": "admin"
+  "role": "admin",
+  "organization_name": "Multron"
 }
 EOF
 

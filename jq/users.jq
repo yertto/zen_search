@@ -1,1 +1,1 @@
-.[] | select(._id==$value)
+( [ $organizations_array[0] | .[] | { key: (._id|tostring), value: .name }] | from_entries) as $organization_names | .[] | select(._id==$value) | . + { organization_name: $organization_names[.organization_id|tostring] }

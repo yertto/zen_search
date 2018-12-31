@@ -7,7 +7,7 @@ keys_for() { local resource="$1"
 }
 
 show() { local resource="$1"; local _id="$2"
-  jq --argjson value "$(quote "$_id")" -f "$(jq_file "${resource}")" "$(json_file "${resource}")"
+  jq --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" "$(json_file "${resource}")"
 }
 
 index() { local resource="$1"; local key="$2"; local value="$3"
@@ -28,4 +28,12 @@ quote() { local value="$1"
   else
     echo "\"$value\""
   fi
+}
+
+slurpfiles_for() { local resource="$resource"
+  case "$resource" in
+    users)
+      echo "--slurpfile organizations_array $(json_file organizations)" ;;
+    *) ;;
+  esac
 }
