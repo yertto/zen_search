@@ -1,28 +1,28 @@
 #!/bin/bash
 . lib/repository.sh
 
-echo "Welcome to Zendesk Search"
+process_value() { local resource="$1"; local key="$2"; local value="$3"
+  case $key in
+    _id)  show "$resource" "$value"        ; break ;;
+    *  ) index "$resource" "$key" "$value" ; break ;;
+  esac
+}
 
-PS3="Your choice: "
-
-select repository in users tickets organizations; do
-  select option in show index list_fields; do
-    case $option in
-      show)
-        printf "Enter _id: "; read -r _id
-        show "$repository" "$_id"
-        break
-        ;;
-      index)
-        printf "Enter key: "  ; read -r key
-        printf "Enter value: "; read -r value
-        index "$repository" "$key" "$value"
-        break
-        ;;
-      *)
-        keys_for "$repository"
-        break
-    esac
+select_key() { local resource="$1"
+  PS3="Select ${resource} key: "
+  select key in $(keys_for "$resource"); do
+    read -p "Enter value for ${resource} ${key}: " value
+    process_value "$resource" "$key" "$value"
   done
-  break
-done
+}
+
+select_resource() {
+  PS3="Select resource: "
+  select resource in users tickets organizations; do
+    (select_key "$resource")
+  done
+}
+
+
+echo "Welcome to Zendesk Search"
+select_resource

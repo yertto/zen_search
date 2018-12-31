@@ -5,7 +5,7 @@ describe "zen_search"
 
   it_matches_expected_output() {
     it "matches matches expected output"
-      assert blank "$(diff -u <(subject) <(echo "$expected"))"
+      assert blank "$(diff --ignore-all-space --unified <(subject) <(echo "$expected"))"
     end
   }
 
@@ -16,10 +16,14 @@ Welcome to Zendesk Search
 1) users
 2) tickets
 3) organizations
-Your choice: 1) show
-2) index
-3) list_fields
-Your choice: Enter _id: {
+Select resource: 1) _id		      8) verified	  15) signature
+2) url		      9) shared		  16) organization_id
+3) external_id	     10) locale		  17) tags
+4) name		     11) timezone	  18) suspended
+5) alias	     12) last_login_at	  19) role
+6) created_at	     13) email
+7) active	     14) phone
+Select users key: {
   "_id": 2,
   "url": "http://initech.zendesk.com/api/v2/users/2.json",
   "external_id": "c9995ea4-ff72-46e0-ab77-dfe0ae1ef6c2",
@@ -53,21 +57,23 @@ Your choice: Enter _id: {
     }
   }
 }
+Select resource:
 EOF
+
     it_matches_expected_output
   end
 
   describe "organizations index details MegaCorp"
-    user_input="3\n2\ndetails\nMegaCorp"
+    user_input="3\n7\nMegaCorp"
     read -d '' expected <<EOF
 Welcome to Zendesk Search
 1) users
 2) tickets
 3) organizations
-Your choice: 1) show
-2) index
-3) list_fields
-Your choice: Enter key: Enter value: 101
+Select resource: 1) _id		   4) name	      7) details
+2) url		   5) domain_names    8) shared_tickets
+3) external_id	   6) created_at      9) tags
+Select organizations key: 101
 105
 109
 112
@@ -76,22 +82,9 @@ Your choice: Enter key: Enter value: 101
 121
 123
 125
+Select resource:
 EOF
-    it_matches_expected_output
-  end
 
-  describe "tickets list_fields"
-    user_input="2\n3"
-    read -d '' expected <<EOF
-Welcome to Zendesk Search
-1) users
-2) tickets
-3) organizations
-Your choice: 1) show
-2) index
-3) list_fields
-Your choice: _id url external_id created_at type subject description priority status submitter_id assignee_id organization_id tags has_incidents due_at via
-EOF
     it_matches_expected_output
   end
 end
