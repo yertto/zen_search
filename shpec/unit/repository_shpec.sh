@@ -1,9 +1,8 @@
 #!/bin/bash shpec
-set -a
 
-. ./lib/zen_search.sh
+. ./lib/repository.sh
 
-describe "zen_search"
+describe "repository"
   describe "keys_for"
     it "returns unsorted keys users"
       assert equal "$(keys_for users)" "_id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role"
