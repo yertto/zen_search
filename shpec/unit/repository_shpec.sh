@@ -20,12 +20,16 @@ describe "repository"
       show ${resource} ${_id}
     }
 
+    it_returns_expected_json() {
+      it "returns augmented human readable json for ${resource}"
+        assert blank "$(diff -u <(subject) <(echo "$expected"))"
+      end
+    }
+
     describe "users"
       resource="users"
       _id=1
-
-      it "returns human readable json"
-        read -d '' expected <<EOF
+      read -d '' expected <<EOF
 {
   "_id": 1,
   "url": "http://initech.zendesk.com/api/v2/users/1.json",
@@ -53,16 +57,14 @@ describe "repository"
   "role": "admin"
 }
 EOF
-        assert equal "$(subject)" "$expected"
-      end
+
+      it_returns_expected_json
     end
 
     describe "tickets"
       resource="tickets"
       _id="436bf9b0-1147-4c0a-8439-6f79833bff5b"
-
-      it "returns human readable json"
-        read -d '' expected <<EOF
+      read -d '' expected <<EOF
 {
   "_id": "436bf9b0-1147-4c0a-8439-6f79833bff5b",
   "url": "http://initech.zendesk.com/api/v2/tickets/436bf9b0-1147-4c0a-8439-6f79833bff5b.json",
@@ -87,16 +89,14 @@ EOF
   "via": "web"
 }
 EOF
-        assert equal "$(subject)" "$expected"
-      end
+
+      it_returns_expected_json
     end
 
     describe "organizations"
       resource="organizations"
       _id=125
-
-      it "returns human readable json"
-        read -d '' expected <<EOF
+      read -d '' expected <<EOF
 {
   "_id": 125,
   "url": "http://initech.zendesk.com/api/v2/organizations/125.json",
@@ -119,8 +119,8 @@ EOF
   ]
 }
 EOF
-        assert equal "$(subject)" "$expected"
-      end
+
+      it_returns_expected_json
     end
   end
 
