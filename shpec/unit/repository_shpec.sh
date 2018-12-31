@@ -147,6 +147,18 @@ EOF
     "Ray",
     "Jacobs",
     "Frank"
+  ],
+  "users": [
+    "Lolita Herring",
+    "Green Buckley"
+  ],
+  "tickets": [
+    "A Problem in Cyprus",
+    "A Drama in Viet Nam",
+    "A Nuisance in Poland",
+    "A Nuisance in Honduras",
+    "A Problem in Ukraine",
+    "A Nuisance in Namibia"
   ]
 }
 EOF
