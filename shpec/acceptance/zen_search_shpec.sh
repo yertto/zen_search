@@ -44,7 +44,8 @@ Your choice: Enter _id: {
   ],
   "suspended": false,
   "role": "admin",
-  "organization_name": "Qualitern"
+  "organization_name": "Qualitern",
+  "tickets": null
 }
 EOF
     it_matches_expected_output

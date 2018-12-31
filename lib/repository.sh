@@ -33,7 +33,7 @@ quote() { local value="$1"
 slurpfiles_for() { local resource="$resource"
   case "$resource" in
     users)
-      echo "--slurpfile organizations_array $(json_file organizations)" ;;
+      echo "--slurpfile tickets_array $(json_file tickets) --slurpfile organizations_array $(json_file organizations)" ;;
     *) ;;
   esac
 }

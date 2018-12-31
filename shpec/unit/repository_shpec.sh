@@ -55,7 +55,8 @@ describe "repository"
   ],
   "suspended": true,
   "role": "admin",
-  "organization_name": "Multron"
+  "organization_name": "Multron",
+  "tickets": null
 }
 EOF
 
