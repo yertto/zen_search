@@ -13,7 +13,7 @@ json_file() { local repository="$1"
   echo "${DATA_DIR}/${repository}.json"
 }
 
-quote() { local value="${value}"
+quote() { local value="$1"
   if [[ $value =~ ^[[:digit:]]+$ ]]; then
     echo "$value"
   else

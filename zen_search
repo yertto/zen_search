@@ -1,4 +1,22 @@
 #!/bin/bash
 . lib/zen_search.sh
 
-keys_for $1
+echo "Welcome to Zendesk Search"
+
+PS3="Your choice: "
+
+select repository in users tickets organizations; do
+  select option in search list_fields; do
+    case $option in
+      search)
+        printf "Enter _id: "; read -r _id
+        show "$repository" "$_id"
+        break
+        ;;
+      *)
+        keys_for "$repository"
+        break
+    esac
+  done
+  break
+done
