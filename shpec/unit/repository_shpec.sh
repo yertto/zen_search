@@ -2,16 +2,35 @@
 
 describe "repository"
   describe "keys_for <resource>"
-    it "returns unsorted keys users"
-      assert equal "$(keys_for users)" "_id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role"
+    subject() {
+      keys_for $resource
+    }
+
+    it_returns_unsorted_keys() {
+      it "returns unsorted ${resource} keys"
+        assert equal "$(subject)" "${expected}"
+      end
+    }
+
+    describe "users"
+      resource="users"
+      expected="_id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role"
+
+      it_returns_unsorted_keys
     end
 
-    it "returns unsorted keys tickets"
-      assert equal "$(keys_for tickets)" "_id url external_id created_at type subject description priority status submitter_id assignee_id organization_id tags has_incidents due_at via"
+    describe "tickets"
+      resource="tickets"
+      expected="_id url external_id created_at type subject description priority status submitter_id assignee_id organization_id tags has_incidents due_at via"
+
+      it_returns_unsorted_keys
     end
 
-    it "returns unsorted keys organizations"
-      assert equal "$(keys_for organizations)" "_id url external_id name domain_names created_at details shared_tickets tags"
+    describe "organizations"
+      resource="organizations"
+      expected="_id url external_id name domain_names created_at details shared_tickets tags"
+
+      it_returns_unsorted_keys
     end
   end
 
@@ -138,13 +157,17 @@ EOF
       index "${resource}" "${key}" "${value}"
     }
 
-    describe "users"
+    it_returns_expected_ids() {
+      it "returns a list of _ids for ${resource}"
+        assert blank "$(diff -u <(subject) <(echo "$expected"))"
+      end
+    }
+
+    describe "searching for string values"
       resource="users"
       key="locale"
       value="en-AU"
-
-      it "returns a list of resource _ids"
-        read -d '' expected <<EOF
+      read -d '' expected <<EOF
 1
 3
 7
@@ -178,9 +201,57 @@ EOF
 73
 74
 EOF
-        assert equal "$(subject)" "$expected"
-      end
+
+      it_returns_expected_ids
     end
-  end
+
+    describe "searching for boolean values"
+      resource="users"
+      key="active"
+      value=true
+      read -d '' expected <<EOF
+1
+2
+4
+5
+9
+10
+11
+13
+15
+16
+17
+18
+21
+22
+23
+30
+31
+32
+34
+37
+40
+42
+43
+45
+49
+50
+51
+54
+55
+56
+57
+61
+62
+65
+66
+67
+68
+69
+71
+EOF
+
+      it_returns_expected_ids
+    end
 end
 
