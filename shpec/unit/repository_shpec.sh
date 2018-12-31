@@ -3,7 +3,7 @@
 . ./lib/repository.sh
 
 describe "repository"
-  describe "keys_for"
+  describe "keys_for <resource>"
     it "returns unsorted keys users"
       assert equal "$(keys_for users)" "_id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role"
     end
@@ -17,17 +17,17 @@ describe "repository"
     end
   end
 
-  describe "show"
+  describe "show <resource> <_id>"
     subject() {
-      show ${resource} ${value}
+      show ${resource} ${_id}
     }
 
     describe "users"
-      resource=users
-      value=1
+      resource="users"
+      _id=1
 
       it "returns human readable json"
-        expected=$(cat <<EOF
+        read -d '' expected <<EOF
 {
   "_id": 1,
   "url": "http://initech.zendesk.com/api/v2/users/1.json",
@@ -54,17 +54,17 @@ describe "repository"
   "suspended": true,
   "role": "admin"
 }
-EOF)
+EOF
         assert equal "$(subject)" "$expected"
       end
     end
 
     describe "tickets"
-      resource=tickets
-      value="436bf9b0-1147-4c0a-8439-6f79833bff5b"
+      resource="tickets"
+      _id="436bf9b0-1147-4c0a-8439-6f79833bff5b"
 
       it "returns human readable json"
-        expected=$(cat <<EOF
+        read -d '' expected <<EOF
 {
   "_id": "436bf9b0-1147-4c0a-8439-6f79833bff5b",
   "url": "http://initech.zendesk.com/api/v2/tickets/436bf9b0-1147-4c0a-8439-6f79833bff5b.json",
@@ -88,17 +88,17 @@ EOF)
   "due_at": "2016-07-31T02:37:50 -10:00",
   "via": "web"
 }
-EOF)
+EOF
         assert equal "$(subject)" "$expected"
       end
     end
 
     describe "organizations"
-      resource=organizations
-      value=125
+      resource="organizations"
+      _id=125
 
       it "returns human readable json"
-        expected=$(cat <<EOF
+        read -d '' expected <<EOF
 {
   "_id": 125,
   "url": "http://initech.zendesk.com/api/v2/organizations/125.json",
@@ -120,7 +120,57 @@ EOF)
     "Frank"
   ]
 }
-EOF)
+EOF
+        assert equal "$(subject)" "$expected"
+      end
+    end
+  end
+
+  describe "index <resource> <key> <value>"
+    subject() {
+      index "${resource}" "${key}" "${value}"
+    }
+
+    describe "users"
+      resource="users"
+      key="locale"
+      value="en-AU"
+
+      it "returns a list of resource _ids"
+        read -d '' expected <<EOF
+1
+3
+7
+10
+12
+13
+14
+20
+22
+23
+27
+29
+33
+35
+38
+39
+41
+43
+45
+47
+48
+52
+53
+55
+56
+58
+66
+68
+69
+70
+73
+74
+EOF
         assert equal "$(subject)" "$expected"
       end
     end
