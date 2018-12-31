@@ -1,13 +1,19 @@
 #!/bin/bash shpec
 
 describe "zen_search"
-  describe "show users 1"
-    subject() {
-      echo -e "1\n1\n2\n" | ./zen_search
-    }
+  subject() {
+    echo -e "$user_input" | ./zen_search 2>&1
+  }
 
-    it "returns human readable json"
-      read -d '' expected <<EOF
+  it_matches_expected_output() {
+    it "matches matches expected output"
+      assert blank "$(diff -u <(subject) <(echo "$expected"))"
+    end
+  }
+
+  describe "users show 1"
+    user_input="1\n1\n2"
+    read -d '' expected <<EOF
 Welcome to Zendesk Search
 1) users
 2) tickets
@@ -42,8 +48,22 @@ Your choice: Enter _id: {
   "role": "admin"
 }
 EOF
-      assert blank "$(diff -u <(subject 2>&1) <(echo "$expected"))"
-    end
+    it_matches_expected_output
+  end
+
+  describe "users list_fields"
+    user_input="1\n3"
+    read -d '' expected <<EOF
+Welcome to Zendesk Search
+1) users
+2) tickets
+3) organizations
+Your choice: 1) show
+2) index
+3) list_fields
+Your choice: _id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role
+EOF
+    it_matches_expected_output
   end
 end
 
