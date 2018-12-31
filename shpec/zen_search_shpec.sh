@@ -92,6 +92,39 @@ EOF)
 EOF)
         assert equal "$(subject)" "$expected"
       end
+    end
+
+    describe "organizations"
+      resource=organizations
+      value=125
+
+      it "returns human readable json"
+        expected=$(cat <<EOF
+{
+  "_id": 125,
+  "url": "http://initech.zendesk.com/api/v2/organizations/125.json",
+  "external_id": "42a1a845-70cf-40ed-a762-acb27fd606cc",
+  "name": "Strezzö",
+  "domain_names": [
+    "techtrix.com",
+    "teraprene.com",
+    "corpulse.com",
+    "flotonic.com"
+  ],
+  "created_at": "2016-02-21T06:11:51 -11:00",
+  "details": "MegaCorp",
+  "shared_tickets": false,
+  "tags": [
+    "Vance",
+    "Ray",
+    "Jacobs",
+    "Frank"
+  ]
+}
+EOF)
+        assert equal "$(subject)" "$expected"
+      end
+    end
   end
 end
 
