@@ -6,9 +6,17 @@ keys_for() { local repository="$1"
 }
 
 show() { local repository="$1"; local _id="$2"
-  jq ".[] | select(._id==$_id)" "$(json_file "${repository}")"
+  jq ".[] | select(._id==$(quote "$_id"))" "$(json_file "${repository}")"
 }
 
 json_file() { local repository="$1"
   echo "${DATA_DIR}/${repository}.json"
+}
+
+quote() { local value="${value}"
+  if [[ $value =~ ^[[:digit:]]+$ ]]; then
+    echo "$value"
+  else
+    echo "\"$value\""
+  fi
 }
