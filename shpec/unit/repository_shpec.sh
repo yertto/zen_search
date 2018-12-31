@@ -272,6 +272,17 @@ EOF
 
       it_returns_expected_ids
     end
+
+    describe "searching for empty values"
+      resource="tickets"
+      key="description"
+      value=""
+      read -d '' expected <<EOF
+"4cce7415-ef12-42b6-b7b5-fb00e24f9cc1"
+EOF
+
+      it_returns_expected_ids
+    end
   end
 end
 

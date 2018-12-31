@@ -25,6 +25,8 @@ json_file() { local resource="$1"
 quote() { local value="$1"
   if [[ $value =~ ^([[:digit:]]+|true|false)$ ]]; then
     echo "$value"
+  elif [[ -z $value ]]; then
+    echo "null"
   else
     echo "\"$value\""
   fi
