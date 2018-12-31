@@ -45,11 +45,13 @@ Your choice: Enter _id: {
   "suspended": false,
   "role": "admin",
   "organization_name": "Qualitern",
-  "submitter_tickets": null,
-  "assignee_tickets": [
-    "A Catastrophe in Bermuda",
-    "A Problem in Svalbard and Jan Mayen Islands"
-  ]
+  "tickets": {
+    "submitted": null,
+    "assigned": {
+      "6fed7d01-15dd-4b59-94f9-1093b4bc0995": "A Catastrophe in Bermuda",
+      "dcb9143e-cb17-49ea-a9be-abf6989bd2d4": "A Problem in Svalbard and Jan Mayen Islands"
+    }
+  }
 }
 EOF
     it_matches_expected_output
