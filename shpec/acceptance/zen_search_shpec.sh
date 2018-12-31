@@ -51,8 +51,8 @@ EOF
     it_matches_expected_output
   end
 
-  describe "users list_fields"
-    user_input="1\n3"
+  describe "organizations index details MegaCorp"
+    user_input="3\n2\ndetails\nMegaCorp"
     read -d '' expected <<EOF
 Welcome to Zendesk Search
 1) users
@@ -61,7 +61,30 @@ Welcome to Zendesk Search
 Your choice: 1) show
 2) index
 3) list_fields
-Your choice: _id url external_id name alias created_at active verified shared locale timezone last_login_at email phone signature organization_id tags suspended role
+Your choice: Enter key: Enter value: 101
+105
+109
+112
+118
+120
+121
+123
+125
+EOF
+    it_matches_expected_output
+  end
+
+  describe "tickets list_fields"
+    user_input="2\n3"
+    read -d '' expected <<EOF
+Welcome to Zendesk Search
+1) users
+2) tickets
+3) organizations
+Your choice: 1) show
+2) index
+3) list_fields
+Your choice: _id url external_id created_at type subject description priority status submitter_id assignee_id organization_id tags has_incidents due_at via
 EOF
     it_matches_expected_output
   end

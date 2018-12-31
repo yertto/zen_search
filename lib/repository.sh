@@ -9,6 +9,10 @@ show() { local repository="$1"; local _id="$2"
   jq ".[] | select(._id==$(quote "$_id"))" "$(json_file "${repository}")"
 }
 
+index() { local repository="$1"; local key="$2"; local value="$3"
+  jq ".[] | select(.${key}==$(quote "$value")) | ._id" "$(json_file "${repository}")"
+}
+
 json_file() { local repository="$1"
   echo "${DATA_DIR}/${repository}.json"
 }
