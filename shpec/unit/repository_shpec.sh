@@ -283,6 +283,30 @@ EOF
 
       it_returns_expected_ids
     end
+
+    describe "searching for array items"
+      resource="tickets"
+      key="tags"
+      value="Utah"
+      read -d '' expected <<EOF
+"4cce7415-ef12-42b6-b7b5-fb00e24f9cc1"
+"25c518a8-4bd9-435a-9442-db4202ec1da4"
+"dd2ed540-0720-4f2b-bb76-dbcb2c0ca25b"
+"1c17f9a3-9ff2-4974-ae34-01959dbf64c6"
+"027e95b2-f8de-43a8-86b0-c688525b3612"
+"bc736a06-eeb0-4271-b4a8-c66f61b5df1f"
+"703d347c-eaeb-402b-9890-b4736649b9ce"
+"cf0d4a27-0dcb-49a9-a4fd-beec25742799"
+"5c66cef0-7abc-46df-b487-5f8eb6208422"
+"05291c66-f705-45a9-834d-4f594b236ff6"
+"fa3a37e3-942e-4048-81bc-d0d7e79cb686"
+"55135930-9f1f-43df-a9fd-2105fff74578"
+"6e146832-0c37-4fb5-b173-a7e89bce4aff"
+"53867869-0db0-4b8d-9d6c-9d1c0af4e693"
+EOF
+
+      it_returns_expected_ids
+    end
   end
 end
 

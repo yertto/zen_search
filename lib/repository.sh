@@ -11,7 +11,8 @@ show() { local resource="$1"; local _id="$2"
 }
 
 index() { local resource="$1"; local key="$2"; local value="$3"
-  jq ".[] | select(.${key}==$(quote "$value")) | ._id" "$(json_file "${resource}")"
+  jq ".[] | select([.${key}] | flatten | index($(quote "$value"))) | ._id" \
+    "$(json_file "${resource}")"
 }
 
 jq_file() { local resource="$1"
