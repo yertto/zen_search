@@ -46,7 +46,10 @@ Your choice: Enter _id: {
   "role": "admin",
   "organization_name": "Qualitern",
   "submitter_tickets": null,
-  "assignee_tickets": "A Problem in Svalbard and Jan Mayen Islands"
+  "assignee_tickets": [
+    "A Catastrophe in Bermuda",
+    "A Problem in Svalbard and Jan Mayen Islands"
+  ]
 }
 EOF
     it_matches_expected_output

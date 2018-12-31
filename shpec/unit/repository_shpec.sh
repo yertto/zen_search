@@ -56,8 +56,14 @@ describe "repository"
   "suspended": true,
   "role": "admin",
   "organization_name": "Multron",
-  "submitter_tickets": "A Nuisance in Saint Lucia",
-  "assignee_tickets": "A Problem in Malawi"
+  "submitter_tickets": [
+    "A Nuisance in Kiribati",
+    "A Nuisance in Saint Lucia"
+  ],
+  "assignee_tickets": [
+    "A Problem in Russian Federation",
+    "A Problem in Malawi"
+  ]
 }
 EOF
 
