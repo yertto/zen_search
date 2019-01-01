@@ -9,7 +9,7 @@ process_value() { local resource="$1"; local key="$2"; local value="$3"
   esac
 }
 
-select_value() { local resource="$1"; key="$2"
+menu_value() { local resource="$1"; key="$2"
   # read -r -p "Enter value for ${resource} ${key}: " value
   PS3="Select ${resource} ${key} value: "
   IFS=$'\n' values=($(values_for "$resource" "$key"))
@@ -19,21 +19,21 @@ select_value() { local resource="$1"; key="$2"
   done
 }
 
-select_key() { local resource="$1"
+menu_key() { local resource="$1"
   PS3="Select ${resource} key: "
   select key in $(keys_for "$resource"); do
-    (select_value "$resource" "$key" "$value")
+    (menu_value "$resource" "$key" "$value")
     break
   done
 }
 
-select_resource() {
+menu_resource() {
   PS3="Select resource: "
   select resource in "${RESOURCES[@]}"; do
-    (select_key "$resource")
+    (menu_key "$resource")
   done
 }
 
 
 echo "Welcome to Zendesk Search"
-select_resource
+menu_resource
