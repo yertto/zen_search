@@ -15,11 +15,11 @@ resources() {
 RESOURCES=(${RESOURCES:-$(resources)})
 
 keys_for() { local resource="$1"
-  jq --raw-output 'first | keys_unsorted | join(" ")' "$(json_file "${resource}")"
+  jq --raw-output -f "$(jq_file keys)"  "$(json_file "${resource}")"
 }
 
 values_for() { local resource="$1"; local key="$2"
-  jq --raw-output "[.[] | ([.${key}] | flatten)[]] | unique[] | @text" "$(json_file "${resource}")"
+  jq --raw-output "[.[] | ([.$key] | flatten)[]] | unique[] | @text" "$(json_file "${resource}")"
 }
 
 show() { local resource="$1"; local _id="$2"

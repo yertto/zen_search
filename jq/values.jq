@@ -1,0 +1,1 @@
+[.[] | ([.$key)] | flatten)[]] | unique[] | @text
