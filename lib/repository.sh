@@ -1,4 +1,11 @@
 #!/bin/bash
+
+if ! type jq > /dev/null 2>&1; then
+  echo "Missing dependency: jq"
+  echo "Try 'brew install jq' or visit https://stedolan.github.io/jq/download/"
+  exit 1
+fi
+
 DATA_DIR=${DATA_DIR:-./data}
 JQ_DIR=${JQ_DIR:-./jq}
 
