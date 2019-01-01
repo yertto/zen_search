@@ -1,0 +1,50 @@
+#!/bin/bash
+# shellcheck disable=SC1091
+. lib/repository.sh
+. lib/menu.sh
+
+process_value() { local resource="$1"; local key="$2"; local value="$3"
+  clear
+  case $key in
+    _id)  show "$resource" "$value"        ; break ;;
+    *  ) index "$resource" "$key" "$value" ; break ;;
+  esac | less --RAW-CONTROL-CHARS
+}
+
+menu_resources() {
+  menu "Search:" "${RESOURCES[@]}"
+}
+
+menu_keys() { local resource="$1"; shift; local keys=($@)
+  menu "\"Search $resource:\"" "${keys[@]}"
+}
+
+menu_values() { local resource="$1"; shift; local key="$1"; shift; local values=($@)
+  menu "\"Search $resource for $key:"\" "${values[@]}"
+}
+
+select_key() { local resource="$1"
+  keys=($(keys_for "$resource"))
+  echo "${keys[$(menu_keys "$resource" "${keys[@]}")]}"
+}
+
+select_resource() {
+  echo "${RESOURCES[$(menu_resources)]}"
+}
+
+select_value() { local resource="$1"; local key="$2"
+  IFS=$'\n' values=($(values_for "$resource" "$key"))
+  selected="$(menu_values "$resource" "$key" "${values[@]}")"
+  echo "${values[$selected]}"
+}
+
+main() {
+  while true; do
+    resource="$(select_resource)"
+    key="$(select_key "$resource")"
+    value="$(select_value "$resource" "$key")"
+    process_value "$resource" "$key" "$value"
+  done
+}
+
+main
