@@ -62,12 +62,12 @@ Select users _id value: {
   ],
   "suspended": false,
   "role": "admin",
-  "organization": "Qualitern",
+  "organization": "Qualitern (details: Artisân)",
   "tickets": {
     "submitted": null,
     "assigned": {
-      "6fed7d01-15dd-4b59-94f9-1093b4bc0995": "A Catastrophe in Bermuda",
-      "dcb9143e-cb17-49ea-a9be-abf6989bd2d4": "A Problem in Svalbard and Jan Mayen Islands"
+      "6fed7d01-15dd-4b59-94f9-1093b4bc0995": "A Catastrophe in Bermuda (created_at: 2016-06-03T06:03:33 -10:00)",
+      "dcb9143e-cb17-49ea-a9be-abf6989bd2d4": "A Problem in Svalbard and Jan Mayen Islands (created_at: 2016-06-10T05:46:41 -10:00)"
     }
   }
 }

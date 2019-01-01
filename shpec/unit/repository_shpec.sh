@@ -187,15 +187,15 @@ EOF
   ],
   "suspended": true,
   "role": "admin",
-  "organization": "Multron",
+  "organization": "Multron (details: Non profit)",
   "tickets": {
     "submitted": {
-      "fc5a8a70-3814-4b17-a6e9-583936fca909": "A Nuisance in Kiribati",
-      "cb304286-7064-4509-813e-edc36d57623d": "A Nuisance in Saint Lucia"
+      "fc5a8a70-3814-4b17-a6e9-583936fca909": "A Nuisance in Kiribati (created_at: 2016-07-08T07:57:15 -10:00)",
+      "cb304286-7064-4509-813e-edc36d57623d": "A Nuisance in Saint Lucia (created_at: 2016-03-30T11:43:24 -11:00)"
     },
     "assigned": {
-      "1fafaa2a-a1e9-4158-aeb4-f17e64615300": "A Problem in Russian Federation",
-      "13aafde0-81db-47fd-b1a2-94b0015803df": "A Problem in Malawi"
+      "1fafaa2a-a1e9-4158-aeb4-f17e64615300": "A Problem in Russian Federation (created_at: 2016-01-15T11:52:49 -11:00)",
+      "13aafde0-81db-47fd-b1a2-94b0015803df": "A Problem in Malawi (created_at: 2016-03-30T08:35:27 -11:00)"
     }
   }
 }
@@ -230,9 +230,9 @@ EOF
   "has_incidents": false,
   "due_at": "2016-07-31T02:37:50 -10:00",
   "via": "web",
-  "submitter": "Elma Castro",
-  "assignee": "Harris Côpeland",
-  "organization": "Zentry"
+  "submitter": "Elma Castro (organization: Isotronic (details: Artisân))",
+  "assignee": "Harris Côpeland (organization: Kindaloo (details: Non profit))",
+  "organization": "Zentry (details: Artisan)"
 }
 EOF
 
