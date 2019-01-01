@@ -1,4 +1,10 @@
+#!/bin/bash
+
 . ./lib/repository.sh
+
+strip_color() {
+   sed "s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g"
+}
 
 describe "repository"
   describe "keys_for <resource>"
@@ -34,6 +40,113 @@ describe "repository"
     end
   end
 
+  describe "values_for <resource>"
+    subject() {
+      values_for $resource $key
+    }
+
+    it_returns_unique_values() {
+      it "returns unique values"
+        assert blank "$(diff --ignore-all-space --unified <(subject | strip_color) <(echo "$expected"))"
+      end
+    }
+
+    describe "for boolean keys"
+      resource="organizations"
+      key="shared_tickets"
+      read -d '' expected <<EOF
+false
+true
+EOF
+
+      it_returns_unique_values
+    end
+
+    describe "for string keys"
+      resource="tickets"
+      key="status"
+      read -d '' expected <<EOF
+closed
+hold
+open
+pending
+solved
+EOF
+
+      it_returns_unique_values
+    end
+
+    describe "for array keys"
+      resource="tickets"
+      key="tags"
+      read -d '' expected <<EOF
+Alabama
+Alaska
+American Samoa
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District Of Columbia
+Florida
+Fédératéd Statés Of Micronésia
+Georgia
+Guam
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Marshall Islands
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Northern Mariana Islands
+Ohio
+Oklahoma
+Oregon
+Palau
+Pennsylvania
+Puerto Rico
+Rhode Island
+Rhodé Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Virgin Islands
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+Şouth Carolina
+Şouth Dakota
+EOF
+
+      it_returns_unique_values
+    end
+  end
+
   describe "show <resource> <_id>"
     subject() {
       show ${resource} ${_id}
@@ -41,7 +154,7 @@ describe "repository"
 
     it_returns_expected_json() {
       it "returns augmented human readable json for ${resource}"
-        assert blank "$(diff -u <(subject) <(echo "$expected"))"
+        assert blank "$(diff --ignore-all-space --unified <(subject | strip_color) <(echo "$expected"))"
       end
     }
 
@@ -176,7 +289,7 @@ EOF
 
     it_returns_expected_ids() {
       it "returns a list of _ids for ${resource}"
-        assert blank "$(diff -u <(subject) <(echo "$expected"))"
+        assert blank "$(diff --ignore-all-space --unified <(subject) <(echo "$expected"))"
       end
     }
 
@@ -294,6 +407,17 @@ EOF
       resource="tickets"
       key="description"
       value=""
+      read -d '' expected <<EOF
+"4cce7415-ef12-42b6-b7b5-fb00e24f9cc1"
+EOF
+
+      it_returns_expected_ids
+    end
+
+    describe "searching for null values"
+      resource="tickets"
+      key="description"
+      value="null"
       read -d '' expected <<EOF
 "4cce7415-ef12-42b6-b7b5-fb00e24f9cc1"
 EOF

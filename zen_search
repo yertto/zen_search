@@ -1,5 +1,6 @@
 #!/bin/bash
-. lib/repository.sh
+# shellcheck disable=SC1091
+source lib/repository.sh
 
 process_value() { local resource="$1"; local key="$2"; local value="$3"
   case $key in
@@ -8,17 +9,27 @@ process_value() { local resource="$1"; local key="$2"; local value="$3"
   esac
 }
 
+select_value() { local resource="$1"; key="$2"
+  # read -r -p "Enter value for ${resource} ${key}: " value
+  PS3="Select ${resource} ${key} value: "
+  IFS=$'\n' values=($(values_for "$resource" "$key"))
+  select value in "${values[@]}"; do
+    IFS=' ' process_value "$resource" "$key" "$value"
+    break
+  done
+}
+
 select_key() { local resource="$1"
   PS3="Select ${resource} key: "
   select key in $(keys_for "$resource"); do
-    read -p "Enter value for ${resource} ${key}: " value
-    process_value "$resource" "$key" "$value"
+    (select_value "$resource" "$key" "$value")
+    break
   done
 }
 
 select_resource() {
   PS3="Select resource: "
-  select resource in users tickets organizations; do
+  select resource in "${RESOURCES[@]}"; do
     (select_key "$resource")
   done
 }

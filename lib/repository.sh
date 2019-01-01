@@ -2,12 +2,21 @@
 DATA_DIR=${DATA_DIR:-./data}
 JQ_DIR=${JQ_DIR:-./jq}
 
+resources() {
+  find "$DATA_DIR" -type f -exec basename {} .json \; | sort -r
+}
+RESOURCES=(${RESOURCES:-$(resources)})
+
 keys_for() { local resource="$1"
   jq --raw-output 'first | keys_unsorted | join(" ")' "$(json_file "${resource}")"
 }
 
+values_for() { local resource="$1"; local key="$2"
+  jq --raw-output "[.[] | ([.${key}] | flatten)[]] | unique[] | @text" "$(json_file "${resource}")"
+}
+
 show() { local resource="$1"; local _id="$2"
-  jq --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" "$(json_file "${resource}")"
+  jq --color-output --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" "$(json_file "${resource}")"
 }
 
 index() { local resource="$1"; local key="$2"; local value="$3"
@@ -26,7 +35,7 @@ json_file() { local resource="$1"
 quote() { local value="$1"
   if [[ $value =~ ^([[:digit:]]+|true|false)$ ]]; then
     echo "$value"
-  elif [[ -z $value ]]; then
+  elif [[ -z $value ]] || [[ $value == null ]]; then
     echo "null"
   else
     echo "\"$value\""
