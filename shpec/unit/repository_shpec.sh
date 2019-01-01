@@ -187,7 +187,7 @@ EOF
   ],
   "suspended": true,
   "role": "admin",
-  "organization_name": "Multron",
+  "organization": "Multron",
   "tickets": {
     "submitted": {
       "fc5a8a70-3814-4b17-a6e9-583936fca909": "A Nuisance in Kiribati",
@@ -232,7 +232,7 @@ EOF
   "via": "web",
   "submitter": "Elma Castro",
   "assignee": "Harris Côpeland",
-  "organization_name": "Zentry"
+  "organization": "Zentry"
 }
 EOF
 

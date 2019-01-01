@@ -23,7 +23,7 @@ values_for() { local resource="$1"; local key="$2"
 }
 
 show() { local resource="$1"; local _id="$2"
-  jq --color-output --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" "$(json_file "${resource}")"
+  jq --color-output --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" -L "${JQ_DIR}" "$(json_file "${resource}")"
 }
 
 index() { local resource="$1"; local key="$2"; local value="$3"

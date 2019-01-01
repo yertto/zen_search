@@ -1,21 +1,10 @@
-(
-  $users_array[0] |
-  [
-    group_by(.organization_id)[] |
-    { (.[0].organization_id|tostring): [.[] | { key: (._id|tostring), value: .name }] | from_entries }
-  ] |
-  add
-) as $organization_user_names |
-(
-  $tickets_array[0] |
-  [
-    group_by(.organization_id)[] |
-    { (.[0].organization_id|tostring): [.[] | { (._id): .subject }] | add }
-  ] |
-  add
-) as $organization_ticket_subjects |
+include "resources";
+
+organization_users   as $organization_users   |
+organization_tickets as $organization_tickets |
+
 .[] | select(._id==$value) +
 {
-  users:        $organization_user_names[._id|tostring],
-  tickets: $organization_ticket_subjects[._id|tostring]
+  users:     $organization_users[._id|tostring],
+  tickets: $organization_tickets[._id|tostring]
 }

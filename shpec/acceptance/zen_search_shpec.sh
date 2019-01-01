@@ -62,7 +62,7 @@ Select users _id value: {
   ],
   "suspended": false,
   "role": "admin",
-  "organization_name": "Qualitern",
+  "organization": "Qualitern",
   "tickets": {
     "submitted": null,
     "assigned": {
