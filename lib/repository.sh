@@ -15,19 +15,34 @@ resources() {
 RESOURCES=(${RESOURCES:-$(resources)})
 
 keys_for() { local resource="$1"
-  jq --raw-output -f "$(jq_file keys)"  "$(json_file "${resource}")"
+  jq --raw-output \
+     -f "$(jq_file keys)" \
+     "$(json_file "${resource}")"
 }
 
 values_for() { local resource="$1"; local key="$2"
-  jq --raw-output "[.[] | ([.$key] | flatten)[]] | unique[] | @text" "$(json_file "${resource}")"
+  jq --raw-output \
+     --arg key "$key" \
+     -f "$(jq_file values)" \
+     "$(json_file "${resource}")"
 }
 
 show() { local resource="$1"; local _id="$2"
-  jq --color-output --argjson value "$(quote "$_id")" $(slurpfiles_for "$resource") -f "$(jq_file "${resource}")" -L "${JQ_DIR}" "$(json_file "${resource}")"
+  jq --color-output \
+     --argjson value "$(quote "$_id")" \
+     $(slurpfiles_for "$resource") \
+     -f "$(jq_file "${resource}")" \
+     -L "${JQ_DIR}" \
+     "$(json_file "${resource}")"
 }
 
 index() { local resource="$1"; local key="$2"; local value="$3"
-  jq ".[] | select([.${key}] | flatten | index($(quote "$value"))) | ._id" \
+  jq --raw-output \
+     --arg key "$key" \
+     --argjson value "$(quote "$value")" \
+     -f "$(jq_file index)" \
+     $(slurpfiles_for "$resource") \
+     -L "${JQ_DIR}" \
     "$(json_file "${resource}")"
 }
 

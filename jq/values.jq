@@ -1,1 +1,9 @@
-[.[] | ([.$key)] | flatten)[]] | unique[] | @text
+[
+  .[] |
+  (
+    [.[$key]] |
+    flatten
+  )[]
+] |
+unique[] |
+@text
