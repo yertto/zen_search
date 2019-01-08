@@ -71,6 +71,8 @@ Select users _id value: {
     }
   }
 }
+Select users _id value:
+Select users key:
 Select resource:
 EOF
 
@@ -101,6 +103,8 @@ Select organizations details value: 101
 121
 123
 125
+Select organizations details value:
+Select organizations key:
 Select resource:
 EOF
 

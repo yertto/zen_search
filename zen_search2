@@ -1,56 +1,49 @@
 #!/bin/bash
 # shellcheck disable=SC1091
-. lib/repository.sh
-. lib/menu.sh
+source lib/repository.sh
+source lib/menu.sh
+
+
+show() {  local resource="$1"; local value="$2"
+  clear
+  find_ "$resource" "$value" |
+    less --RAW-CONTROL-CHARS
+}
 
 process_value() { local resource="$1"; local key="$2"; local value="$3"
   clear
   case $key in
-    _id)       show "$resource" "$value"        ; break ;;
-    *  ) menu_index "$resource" "$key" "$value" ; break ;;
-  esac | less --RAW-CONTROL-CHARS
+    _id)         show "$resource" "$value"        ; break ;;
+    *  ) menu_find_by "$resource" "$key" "$value" ; break ;;
+  esac
 }
 
-menu_resources() {
-  menu "Search:" "${RESOURCES[@]}"
-}
-
-menu_keys() { local resource="$1"; shift; local keys=($@)
-  menu "\"Search $resource:\"" "${keys[@]}"
-}
-
-menu_values() { local resource="$1"; shift; local key="$1"; shift; local values=($@)
-  menu "\"Search $resource for $key:"\" "${values[@]}"
-}
-
-menu_index() { local resource="$1"; local key="$2"; local value="$3"
-  values=($(index "$resource" "$key" "$value"))
-  selected="$(menu_values "$resource" "$key" "${values[@]}")"
-  show "$resource" "${values[$selected]}"
-}
-
-select_key() { local resource="$1"
-  keys=($(keys_for "$resource"))
-  echo "${keys[$(menu_keys "$resource" "${keys[@]}")]}"
-}
-
-select_resource() {
-  echo "${RESOURCES[$(menu_resources)]}"
-}
-
-select_value() { local resource="$1"; local key="$2"
-  IFS=$'\n' values=($(values_for "$resource" "$key"))
-  selected="$(menu_values "$resource" "$key" "${values[@]}")"
-  echo "${values[$selected]}"
-}
-
-main() {
-  while true; do
-    resource="$(select_resource)"
-    key="$(select_key "$resource")"
-    value="$(select_value "$resource" "$key")"
-    process_value "$resource" "$key" "$value"
+menu_find_by() { local resource="$1"; local key="$2"; local value="$3"
+  IFS=$'\n' ids=($(find_by "$resource" "$key" "$value"))
+  while selected="$(menu "\"/$resource?$key=$value"\" "${ids[@]}")"; do
+    show "$resource" "${ids[$selected]}"
   done
 }
 
-main
+menu_value() { local resource="$1"; local key="$2"
+  IFS=$'\n' values=($(values_for "$resource" "$key"))
+  while selected=$(menu "\"/$resource?$key="\" "${values[@]}"); do
+    (process_value "$resource" "$key" "${values[$selected]}")
+  done
+}
+
+menu_key() { local resource="$1";
+  keys=($(keys_for "$resource"))
+  while selected=$(menu "\"/$resource\"" "${keys[@]}"); do
+    (menu_value "$resource" "${keys[$selected]}")
+  done
+}
+
+menu_resource() {
+  while selected="$(menu "\"/\"" "${RESOURCES[@]}")"; do
+    (menu_key "${RESOURCES[$selected]}")
+  done
+}
+
+
+menu_resource

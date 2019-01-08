@@ -27,23 +27,29 @@ values_for() { local resource="$1"; local key="$2"
      "$(json_file "${resource}")"
 }
 
-show() { local resource="$1"; local _id="$2"
-  jq --color-output \
-     --argjson value "$(quote "$_id")" \
-     $(slurpfiles_for "$resource") \
-     -f "$(jq_file "${resource}")" \
-     -L "${JQ_DIR}" \
-     "$(json_file "${resource}")"
+find_() { local resource="$1"; local _id="$2"
+  (
+    IFS=' '
+    jq --color-output \
+       --argjson value "$(quote "$_id")" \
+       $(slurpfiles_for "$resource") \
+       -f "$(jq_file "${resource}")" \
+       -L "${JQ_DIR}" \
+       "$(json_file "${resource}")"
+  )
 }
 
-index() { local resource="$1"; local key="$2"; local value="$3"
-  jq --raw-output \
-     --arg key "$key" \
-     --argjson value "$(quote "$value")" \
-     -f "$(jq_file index)" \
-     $(slurpfiles_for "$resource") \
-     -L "${JQ_DIR}" \
-    "$(json_file "${resource}")"
+find_by() { local resource="$1"; local key="$2"; local value="$3"
+  (
+    IFS=' '
+    jq --raw-output \
+       --arg key "$key" \
+       --argjson value "$(quote "$value")" \
+       -f "$(jq_file find_by)" \
+       $(slurpfiles_for "$resource") \
+       -L "${JQ_DIR}" \
+      "$(json_file "${resource}")"
+  )
 }
 
 jq_file() { local resource="$1"
@@ -65,6 +71,7 @@ quote() { local value="$1"
 }
 
 slurpfiles_for() { local resource="$resource"
+  # TODO: remove the requirement for IFS=' ' whenever this is called.  :(
   case "$resource" in
     users)
       echo "--slurpfile tickets_array $(json_file tickets) --slurpfile organizations_array $(json_file organizations)" ;;

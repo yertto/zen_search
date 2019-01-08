@@ -147,9 +147,9 @@ EOF
     end
   end
 
-  describe "show <resource> <_id>"
+  describe "find_ <resource> <_id>"
     subject() {
-      show ${resource} ${_id}
+      find_ ${resource} ${_id}
     }
 
     it_returns_expected_json() {
@@ -202,6 +202,13 @@ EOF
 EOF
 
       it_returns_expected_json
+
+      describe "when IFS=$'\n'"
+        (
+          IFS=$'\n'
+          it_returns_expected_json
+        )
+      end
     end
 
     describe "tickets"
@@ -268,12 +275,12 @@ EOF
     "51": "Green Buckley"
   },
   "tickets": {
-    "25d9edca-7756-4d28-8fdd-f16f1532f6ab": "A Problem in Cyprus",
-    "ed3432e1-8cb7-40a1-be6a-6f69cbc911f1": "A Drama in Viet Nam",
-    "31e7f6d7-f6cb-4781-b4e7-2f552941e1f5": "A Nuisance in Poland",
-    "d9448e74-4a7d-45c5-9548-8b4fee714b29": "A Nuisance in Honduras",
-    "dae7a200-89b8-4a43-a17d-93c8f33a2aaa": "A Problem in Ukraine",
-    "50f3fdbd-f8a6-481d-9bf7-572972856628": "A Nuisance in Namibia"
+    "25d9edca-7756-4d28-8fdd-f16f1532f6ab": "A Problem in Cyprus (created_at: 2016-03-01T05:58:09 -11:00)",
+    "ed3432e1-8cb7-40a1-be6a-6f69cbc911f1": "A Drama in Viet Nam (created_at: 2016-05-02T05:45:35 -10:00)",
+    "31e7f6d7-f6cb-4781-b4e7-2f552941e1f5": "A Nuisance in Poland (created_at: 2016-04-25T02:22:03 -10:00)",
+    "d9448e74-4a7d-45c5-9548-8b4fee714b29": "A Nuisance in Honduras (created_at: 2016-04-09T07:56:36 -10:00)",
+    "dae7a200-89b8-4a43-a17d-93c8f33a2aaa": "A Problem in Ukraine (created_at: 2016-02-06T03:56:09 -11:00)",
+    "50f3fdbd-f8a6-481d-9bf7-572972856628": "A Nuisance in Namibia (created_at: 2016-05-19T08:52:06 -10:00)"
   }
 }
 EOF
@@ -282,9 +289,9 @@ EOF
     end
   end
 
-  describe "index <resource> <key> <value>"
+  describe "find_by <resource> <key> <value>"
     subject() {
-      index "${resource}" "${key}" "${value}"
+      find_by "${resource}" "${key}" "${value}"
     }
 
     it_returns_expected_ids() {
@@ -333,6 +340,13 @@ EOF
 EOF
 
       it_returns_expected_ids
+
+      describe "when IFS=$'\n'"
+        (
+          IFS=$'\n'
+          it_returns_expected_ids
+        )
+      end
     end
 
     describe "searching for boolean values"

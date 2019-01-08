@@ -4,8 +4,8 @@ source lib/repository.sh
 
 process_value() { local resource="$1"; local key="$2"; local value="$3"
   case $key in
-    _id)  show "$resource" "$value"        ; break ;;
-    *  ) index "$resource" "$key" "$value" ; break ;;
+    _id)   find_ "$resource" "$value"        ; break ;;
+    *  ) find_by "$resource" "$key" "$value" ; break ;;
   esac
 }
 
@@ -14,23 +14,33 @@ menu_value() { local resource="$1"; key="$2"
   PS3="Select ${resource} ${key} value: "
   IFS=$'\n' values=($(values_for "$resource" "$key"))
   select value in "${values[@]}"; do
-    IFS=' ' process_value "$resource" "$key" "$value"
-    break
+    if [ -n "$value" ]; then
+      (IFS=' ' process_value "$resource" "$key" "$value")
+    else
+      break
+    fi
   done
 }
 
 menu_key() { local resource="$1"
   PS3="Select ${resource} key: "
   select key in $(keys_for "$resource"); do
-    (menu_value "$resource" "$key" "$value")
-    break
+    if [ -n "$key" ]; then
+      (menu_value "$resource" "$key")
+    else
+      break
+    fi
   done
 }
 
 menu_resource() {
   PS3="Select resource: "
   select resource in "${RESOURCES[@]}"; do
-    (menu_key "$resource")
+    if [ -n "$resource" ]; then
+      (menu_key "$resource")
+    else
+      break
+    fi
   done
 }
 

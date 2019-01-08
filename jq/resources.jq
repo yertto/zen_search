@@ -33,7 +33,7 @@ def organization_tickets:
   $tickets_array[0] |
   [
     group_by(.organization_id)[] |
-    { (.[0].organization_id|tostring): [.[] | { (._id): .subject }] | add }
+    { (.[0].organization_id|tostring): [.[] | { (._id): ticket_str }] | add }
   ] |
   add;
 
